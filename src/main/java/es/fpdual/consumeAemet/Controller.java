@@ -19,9 +19,9 @@ public class Controller {
 	Gson jsonParser = new Gson();
 
 	HttpClient httpclient = HttpClients.createDefault();
-	
+
 	String apiKey;
-	
+
 	public Controller(String apiKey) {
 		super();
 		this.apiKey = apiKey;
@@ -31,11 +31,11 @@ public class Controller {
 		HttpGet httpget = new HttpGet(url);
 		httpget.addHeader("api_key", apiKey);
 
-			HttpResponse response = httpclient.execute(httpget);
-			HttpEntity entity = response.getEntity();
-			String entityString = EntityUtils.toString(entity);
+		HttpResponse response = httpclient.execute(httpget);
+		HttpEntity entity = response.getEntity();
+		String entityString = EntityUtils.toString(entity);
 
-			return jsonParser.fromJson(entityString, RespuestaAemet.class);
+		return jsonParser.fromJson(entityString, RespuestaAemet.class);
 	}
 
 	public String stringAemet(RespuestaAemet json) throws ParseException, IOException {
@@ -45,22 +45,21 @@ public class Controller {
 
 		return EntityUtils.toString(dataEntity);
 	}
-	
-	public void resultSet(String dataString){
-	JSONArray result = new JSONArray(dataString);
-	JSONObject jsonObject = (JSONObject) result.get(0);
-	JSONObject prediccion = jsonObject.getJSONObject("prediccion");
-	JSONObject dia = prediccion.getJSONArray("dia").getJSONObject(0);
-	JSONObject temperatura = dia.getJSONObject("temperatura");
 
-	String municipio = jsonObject.get("nombre").toString();
-	Integer maxima = Integer.valueOf(temperatura.get("maxima").toString());
-	Integer minima = Integer.valueOf(temperatura.get("minima").toString());
-	
-	System.out.println(municipio);
-	System.out.println(maxima);
-	System.out.println(minima);;
-	
+	public void resultSet(String dataString) {
+		JSONArray result = new JSONArray(dataString);
+		JSONObject jsonObject = (JSONObject) result.get(0);
+		JSONObject prediccion = jsonObject.getJSONObject("prediccion");
+		JSONObject dia = prediccion.getJSONArray("dia").getJSONObject(0);
+		JSONObject temperatura = dia.getJSONObject("temperatura");
+
+		String municipio = jsonObject.get("nombre").toString();
+		Integer maxima = Integer.valueOf(temperatura.get("maxima").toString());
+		Integer minima = Integer.valueOf(temperatura.get("minima").toString());
+
+		System.out.println(municipio);
+		System.out.println(maxima);
+		System.out.println(minima);
 	}
-	
+
 }
