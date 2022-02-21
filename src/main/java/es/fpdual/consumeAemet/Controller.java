@@ -28,8 +28,8 @@ public class Controller {
 	}
 
 	public RespuestaAemet jsonAemet(String url) throws ClientProtocolException, IOException {
-		HttpGet httpget = new HttpGet(
-				url+ "?" + apiKey);
+		HttpGet httpget = new HttpGet(url);
+		httpget.addHeader("api_key", apiKey);
 
 			HttpResponse response = httpclient.execute(httpget);
 			HttpEntity entity = response.getEntity();
