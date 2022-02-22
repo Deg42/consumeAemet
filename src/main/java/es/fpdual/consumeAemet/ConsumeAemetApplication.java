@@ -28,6 +28,14 @@ public class ConsumeAemetApplication {
 		JSONObject json = controller.stringToJsonObject(stringEntidad);
 
 		JSONObject prediccionDia = controller.getPrediccionPorDia(json, 0);
+		
+		DatosAemet datos = new DatosAemet();
+		
+		datos.setMunicipio(controller.getMunicipio(json));
+		datos.setTemperaturaMaxima(controller.getTemperaturaMaxima(prediccionDia));
+		datos.setTemperaturaMinima(controller.getTemperaturaMinima(prediccionDia));
+		
+		System.out.println(datos.toString());
 
 	}
 

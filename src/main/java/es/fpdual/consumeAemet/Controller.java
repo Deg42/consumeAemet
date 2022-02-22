@@ -93,5 +93,7 @@ public class Controller {
 		return Integer.valueOf(temperatura.get("minima").toString());
 	};
 	
+	//getDatos
+	
 	
 }
