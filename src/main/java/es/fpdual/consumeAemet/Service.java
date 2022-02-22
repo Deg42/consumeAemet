@@ -20,6 +20,7 @@ public class Service {
 	
 	String url = "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/";
 	
+	// This would be and env param
 	private static final String APIKEY = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZ29uemFsZXpyaXZlcmFAZWNpLnNhZmFuZXQuZXMiLCJqdGkiOiI1ZjVjYjBhYy1hM2NjLTQyYjAtOGU3Yy02YjlhZGM3NDVhZjIiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY0NTEwNDk4MCwidXNlcklkIjoiNWY1Y2IwYWMtYTNjYy00MmIwLThlN2MtNmI5YWRjNzQ1YWYyIiwicm9sZSI6IiJ9.Di_e909jMRgGn4ZOc0zYF1-iQJKEQMWGQMXBiJB0T9M";
 
 	Gson jsonParser = new Gson();
