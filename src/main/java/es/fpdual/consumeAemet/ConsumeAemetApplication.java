@@ -3,6 +3,7 @@ package es.fpdual.consumeAemet;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
+import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,11 +19,16 @@ public class ConsumeAemetApplication {
 
 		Controller controller = new Controller();
 
-		HttpEntity entidad = controller.getAemetEntity(url, args[0]);
-		
+		HttpEntity entidad = controller.getAemetEntity(url + idMunicipio, args[0]);
+
 		RespuestaAemet respuesta = controller.entityToClass(entidad);
 
-		ctx.close();
+		String stringEntidad = controller.aemetEntityToString(respuesta);
+
+		JSONObject json = controller.stringToJsonObject(stringEntidad);
+
+		JSONObject prediccionDia = controller.getPrediccionPorDia(json, 0);
+
 	}
 
 }

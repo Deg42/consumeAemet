@@ -1,5 +1,5 @@
 package es.fpdual.consumeAemet;
 
-public class ResultadoTiempoAemet {
+public class DatosAemet {
 
 }

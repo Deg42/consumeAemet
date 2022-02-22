@@ -17,8 +17,6 @@ import com.google.gson.Gson;
 
 public class Controller {
 
-	String apiKey;
-
 	Gson jsonParser = new Gson();
 
 	HttpClient httpclient = HttpClients.createDefault();
@@ -42,7 +40,7 @@ public class Controller {
 	}
 
 	public RespuestaAemet entityToClass(HttpEntity entity) {
-		String entityString = "";
+		String entityString;
 		try {
 			entityString = EntityUtils.toString(entity);
 			return jsonParser.fromJson(entityString, RespuestaAemet.class);
@@ -69,20 +67,31 @@ public class Controller {
 		return "";
 	}
 
-	public void resultSet(String dataString) {
+	public JSONObject stringToJsonObject(String dataString) {
 		JSONArray result = new JSONArray(dataString);
-		JSONObject jsonObject = (JSONObject) result.get(0);
-		JSONObject prediccion = jsonObject.getJSONObject("prediccion");
-		JSONObject dia = prediccion.getJSONArray("dia").getJSONObject(0);
-		JSONObject temperatura = dia.getJSONObject("temperatura");
-
-		String municipio = jsonObject.get("nombre").toString();
-		Integer maxima = Integer.valueOf(temperatura.get("maxima").toString());
-		Integer minima = Integer.valueOf(temperatura.get("minima").toString());
-
-		System.out.println(municipio);
-		System.out.println(maxima);
-		System.out.println(minima);
+		return (JSONObject) result.get(0);
 	}
+		
 
+	public String getMunicipio(JSONObject json) {
+		return json.get("nombre").toString();
+	};
+	
+	public JSONObject getPrediccionPorDia(JSONObject json, int dia) {
+		return json.getJSONObject("prediccion").getJSONArray("dia").getJSONObject(dia);
+	};
+	
+	public Integer getTemperaturaMaxima(JSONObject jsonDia) {
+		JSONObject temperatura = jsonDia.getJSONObject("temperatura");
+		
+		return Integer.valueOf(temperatura.get("maxima").toString());
+	};
+	
+	public Integer getTemperaturaMinima(JSONObject jsonDia) {
+		JSONObject temperatura = jsonDia.getJSONObject("temperatura");
+		
+		return Integer.valueOf(temperatura.get("minima").toString());
+	};
+	
+	
 }
