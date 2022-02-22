@@ -16,34 +16,57 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 
 public class Controller {
+
+	String apiKey;
+
 	Gson jsonParser = new Gson();
 
 	HttpClient httpclient = HttpClients.createDefault();
 
-	String apiKey;
-
-	public Controller(String apiKey) {
-		super();
-		this.apiKey = apiKey;
-	}
-
-	public RespuestaAemet jsonAemet(String url) throws ClientProtocolException, IOException {
+	public HttpEntity getAemetEntity(String url, String apiKey) {
 		HttpGet httpget = new HttpGet(url);
 		httpget.addHeader("api_key", apiKey);
 
-		HttpResponse response = httpclient.execute(httpget);
-		HttpEntity entity = response.getEntity();
-		String entityString = EntityUtils.toString(entity);
-
-		return jsonParser.fromJson(entityString, RespuestaAemet.class);
+		HttpResponse response;
+		HttpEntity entity;
+		try {
+			response = httpclient.execute(httpget);
+			entity = response.getEntity();
+			return entity;
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 
-	public String stringAemet(RespuestaAemet json) throws ParseException, IOException {
-		HttpGet dataFile = new HttpGet(json.getDatos());
-		HttpResponse dataRes = httpclient.execute(dataFile);
-		HttpEntity dataEntity = dataRes.getEntity();
+	public RespuestaAemet entityToClass(HttpEntity entity) {
+		String entityString = "";
+		try {
+			entityString = EntityUtils.toString(entity);
+			return jsonParser.fromJson(entityString, RespuestaAemet.class);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-		return EntityUtils.toString(dataEntity);
+	public String aemetEntityToString(RespuestaAemet json) {
+		HttpGet dataFile = new HttpGet(json.getDatos());
+		HttpResponse dataRes;
+		try {
+			dataRes = httpclient.execute(dataFile);
+			HttpEntity dataEntity = dataRes.getEntity();
+			return EntityUtils.toString(dataEntity);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	public void resultSet(String dataString) {
