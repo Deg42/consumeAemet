@@ -82,7 +82,6 @@ public class Service {
 		return (JSONObject) result.get(0);
 	}
 		
-
 	public String getMunicipio(JSONObject json) {
 		return json.get("nombre").toString();
 	};
@@ -103,7 +102,6 @@ public class Service {
 		return Integer.valueOf(temperatura.get("minima").toString());
 	};
 	
-	
 	public DatosAemet getDatos(String idMunicipio) {
 				
 		HttpEntity entidad = this.getAemetEntity(url + idMunicipio, APIKEY);
@@ -119,6 +117,5 @@ public class Service {
 		
 		return datos;
 	}
-	
-	
+		
 }

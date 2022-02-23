@@ -17,11 +17,9 @@ public class Controller {
 
 	@GetMapping("/{codMunicipio}")
 	public ResponseEntity<?> getDatosDeMunicipio(@PathVariable String codMunicipio) {
-
 		DatosAemet datos = this.service.getDatos(codMunicipio);
 
 		return new ResponseEntity<>(datos, HttpStatus.OK);
-
 	}
 
 }

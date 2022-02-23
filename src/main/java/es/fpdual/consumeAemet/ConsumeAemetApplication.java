@@ -13,6 +13,4 @@ public class ConsumeAemetApplication {
 		SpringApplication.run(ConsumeAemetApplication.class, args);
 	}
 
-
-
 }
